@@ -27,7 +27,7 @@ public class WebScraper {
     //Attempting Initial Connection
     public int connect(){
         try {
-            Document connection = Jsoup.connect("http://www.essexstudent.com/whatson/").get();
+            Document connection = Jsoup.connect("https://www.essexstudent.com/whatson/").get();
             return 1;
         } catch (IOException ex) {
             System.out.println("Connection Failed 00000");
@@ -38,11 +38,11 @@ public class WebScraper {
     //Retrieving initial links from http://www.essexstudent.com/whatson/ of all events
     public void getLinks() {
         try {
-            Document allEvents = Jsoup.connect("http://www.essexstudent.com/whatson/").get();
+            Document allEvents = Jsoup.connect("https://www.essexstudent.com/whatson/").get();
             Elements rawLink = allEvents.select("a.msl_event_name");
 
             for(Element e: rawLink) {
-                String link = "http://www.essexstudent.com"+e.attr("href");
+                String link = "https://www.essexstudent.com"+e.attr("href");
                 eventLinks.add(link);
             }
 
@@ -73,11 +73,11 @@ public class WebScraper {
     //might not always be 50 events on.
     //Retrieve Images For Each Link
     public void getImages(int itemNumber) {
-        String url = "http://www.essexstudent.com";
+        String url = "https://www.essexstudent.com";
         try {
 
             Elements span;
-            Document connection = Jsoup.connect("http://www.essexstudent.com/whatson/").get();
+            Document connection = Jsoup.connect("https://www.essexstudent.com/whatson/").get();
             Elements imageFinder = connection.select("span.msl_event_image");
             int tempInt = 0;
 

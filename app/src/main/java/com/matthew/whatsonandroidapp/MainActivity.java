@@ -69,7 +69,6 @@ public class MainActivity extends AppCompatActivity {
 
         private int x;
         private int itemNumber = x;
-        private String url = "http://www.essexstudent.com";
 
         private ArrayList<String> eventLinks = new ArrayList<String>();
         private ArrayList<String> eventTitles = new ArrayList<String>();
@@ -103,31 +102,6 @@ public class MainActivity extends AppCompatActivity {
                 eventTitles = whatson.returnTitles();
                 eventInfos = whatson.returnInfos();
                 eventDescs = whatson.returnDescs();
-
-                System.out.println("stage two");
-
-                for (int u=0;u<eventLinks.size();u++) {
-                    System.out.println(u);
-                    System.out.println("Event Link: "+ eventLinks.get(u));
-                }
-                for (int u=0;u<eventImages.size();u++) {
-                    System.out.println(u);
-                    System.out.println("Event Image: "+ eventImages.get(u));
-                }
-                for (int u=0;u<eventTitles.size();u++) {
-                    System.out.println(u);
-                    System.out.println("Event Title: "+ eventTitles.get(u));
-                }
-                for (int u=0;u<eventInfos.size();u++) {
-                    System.out.println(u);
-                    System.out.println("Event Info: "+ eventInfos.get(u));
-                }
-                for (int u=0;u<eventDescs.size();u++) {
-                    System.out.println(u);
-                    System.out.println("Event Desc: "+ eventDescs.get(u));
-                }
-
-                System.out.println("stage three");
             }
             return null;
         }
@@ -149,12 +123,14 @@ public class MainActivity extends AppCompatActivity {
                     int resID = getResources().getIdentifier(imgId, "id", "com.matthew.whatsonandroidapp");
                     ImageView changeImage = (ImageView) findViewById(resID);
 
+                    System.out.println(changeImage);
+
                     link = eventImages.get(i);
-                    System.out.println("-------------------"+j+"----------------------");
-                    System.out.println("-------------------"+i+"-----------------------");
-                    System.out.println(url + link);
-                    //Picasso.with(changeImage.getContext()).load(link).into(changeImage);
-                    Picasso.with(changeImage.getContext()).load("http://www.essexstudent.com/asset/Event/6006/back_to_the_future.jpg?thumbnail_width=400&thumbnail_height=225&resize_type=CropToFit").into(changeImage);
+                    /*try {
+                        Picasso.with(changeImage.getContext()).load(link).into(changeImage);
+                    } catch (Exception e) {
+
+                    }*/
                 }
                 j++;
             }
