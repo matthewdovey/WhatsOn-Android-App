@@ -15,10 +15,14 @@ import com.squareup.picasso.Picasso;
 
 public class EventActivity extends AppCompatActivity {
 
+    static String eventLink;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event);
+
+        eventLink = MainActivity.focusLink;
 
         ImageView eventImage = (ImageView) findViewById(R.id.focusImageId);
         TextView eventTitle = (TextView) findViewById(R.id.focusTitleId);

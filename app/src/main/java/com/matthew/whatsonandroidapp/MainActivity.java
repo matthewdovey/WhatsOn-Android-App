@@ -51,12 +51,13 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
+    static String focusLink;
     static String focusImage;
     static String focusTitle;
     static String focusInfo;
     static String focusDesc;
 
-    //private ArrayList<String> eventLinks = new ArrayList<String>();
+    private ArrayList<String> eventLinks = new ArrayList<String>();
     private ArrayList<String> eventTitles = new ArrayList<String>();
     private ArrayList<String> eventInfos = new ArrayList<String>();
     private ArrayList<String> eventImages = new ArrayList<String>();
@@ -68,14 +69,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         new JsoupListView().execute();
-
-        /*Button eventPage = (Button) findViewById(R.id.button1);
-        eventPage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, EventActivity.class));
-            }
-        });*/
 
         Button event1 = (Button) findViewById(R.id.button1);
         Button event2 = (Button) findViewById(R.id.button2);
@@ -134,6 +127,7 @@ public class MainActivity extends AppCompatActivity {
             }
             System.out.println(idNumber);
 
+            focusLink = eventLinks.get(idNumber);
             focusImage = eventImages.get(idNumber);
             focusTitle = eventTitles.get(idNumber);
             focusInfo = eventInfos.get(idNumber);
@@ -169,7 +163,7 @@ public class MainActivity extends AppCompatActivity {
                 }
                 whatson.getImages(itemNumber);
 
-                //eventLinks = whatson.returnLinks();
+                eventLinks = whatson.returnLinks();
                 eventImages = whatson.returnImages();
                 eventTitles = whatson.returnTitles();
                 eventInfos = whatson.returnInfos();

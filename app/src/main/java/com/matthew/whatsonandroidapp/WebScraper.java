@@ -14,6 +14,13 @@ import java.util.ArrayList;
 
 public class WebScraper {
 
+    //Web scraper needs fixing.
+    //change the way it scrapes descriptions.
+    //Maybe only scrape things that are in the event tag.
+    //There is a class called msl_event that seems to hold
+    //All of the relevant info needed.
+    //see if you can only scrape the contents of that tag.
+
     //Creating ArrayLists
     private static ArrayList<String> eventLinks = new ArrayList<String>();
     private static ArrayList<String> eventTitles = new ArrayList<String>();

@@ -24,8 +24,10 @@ public class WebActivity extends AppCompatActivity {
         WebSettings webSettings = eventWebView.getSettings();
         webSettings.setJavaScriptEnabled(true);
 
+        String sendTo = EventActivity.eventLink;
+
         //Test website please delete!
-        eventWebView.loadUrl("http://www.essexstudent.com/ents/event/5986/");
+        eventWebView.loadUrl(sendTo);
 
     }
 }
