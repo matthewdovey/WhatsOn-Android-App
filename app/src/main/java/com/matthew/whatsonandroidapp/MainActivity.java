@@ -69,6 +69,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         new JsoupListView().execute();
+        //Makes button objects so that we can add action listeners
 
         Button event1 = (Button) findViewById(R.id.button1);
         Button event2 = (Button) findViewById(R.id.button2);
@@ -86,6 +87,7 @@ public class MainActivity extends AppCompatActivity {
         Button event14 = (Button) findViewById(R.id.button14);
         Button event15 = (Button) findViewById(R.id.button15);
 
+        //Actionlistener added
         event1.setOnClickListener(buttonCheck);
         event2.setOnClickListener(buttonCheck);
         event3.setOnClickListener(buttonCheck);
@@ -101,13 +103,9 @@ public class MainActivity extends AppCompatActivity {
         event13.setOnClickListener(buttonCheck);
         event14.setOnClickListener(buttonCheck);
         event15.setOnClickListener(buttonCheck);
-
-
-
-
-        event14.setOnClickListener(buttonCheck);
     }
 
+    //Action Listener
     View.OnClickListener buttonCheck = new View.OnClickListener() {
         public void onClick(View v) {
 
