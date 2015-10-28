@@ -176,6 +176,13 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(ArrayList<String> strings) {
             super.onPostExecute(strings);
+
+            ImageView splashScreen = (ImageView) findViewById(R.id.splash);
+            RelativeLayout mainLayout = (RelativeLayout) findViewById(R.id.main);
+
+            splashScreen.setVisibility(View.GONE);
+            mainLayout.setVisibility(View.VISIBLE);
+
             String link;
             String buttName;
             String infoName;
