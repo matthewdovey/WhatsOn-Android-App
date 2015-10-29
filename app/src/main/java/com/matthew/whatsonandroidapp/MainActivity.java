@@ -121,15 +121,13 @@ public class MainActivity extends AppCompatActivity {
                     idNumber--;
                 }
                 idNumber++;
-                System.out.println(idNumber);
             }
-            System.out.println(idNumber);
 
-            focusLink = eventLinks.get(idNumber);
-            focusImage = eventImages.get(idNumber);
-            focusTitle = eventTitles.get(idNumber);
-            focusInfo = eventInfos.get(idNumber);
-            focusDesc = eventDescs.get(idNumber);
+            focusLink = eventLinks.get(idNumber-1);
+            focusImage = eventImages.get(idNumber-1);
+            focusTitle = eventTitles.get(idNumber-1);
+            focusInfo = eventInfos.get(idNumber-1);
+            focusDesc = eventDescs.get(idNumber-1);
 
             startActivity(new Intent(MainActivity.this, EventActivity.class));
         }
