@@ -201,12 +201,12 @@ public class MainActivity extends AppCompatActivity {
                     link = eventImages.get(i);
                     Picasso.with(changeImage.getContext()).load(link).into(changeImage);
                 } else {
-                    System.out.println(j);
-                    System.out.println(imgId);
+                    //System.out.println(j);
+                    //System.out.println(imgId);
                     int resID = getResources().getIdentifier(imgId, "id", "com.matthew.whatsonandroidapp");
                     ImageView changeImage = (ImageView) findViewById(resID);
 
-                    System.out.println(changeImage);
+                    //System.out.println(changeImage);
 
                     link = eventImages.get(i);
                     try {
