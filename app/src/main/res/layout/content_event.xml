@@ -9,7 +9,7 @@
 
         <ImageView
             android:layout_width="fill_parent"
-            android:layout_height="230dp"
+            android:layout_height="203dp"
             android:id="@+id/focusImageId"
             android:layout_alignParentTop="true"
             android:layout_alignParentLeft="true"
@@ -18,7 +18,9 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:paddingLeft="10dp"
             android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textStyle="bold"
             android:text="Medium Text"
             android:id="@+id/focusTitleId"
             android:layout_below="@+id/focusImageId"
@@ -27,6 +29,8 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:paddingLeft="10dp"
+            android:textStyle="bold"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="Medium Text"
             android:id="@+id/focusInfoId"
@@ -36,6 +40,7 @@
         <TextView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:paddingLeft="10dp"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="Medium Text"
             android:id="@+id/focusDescId"
