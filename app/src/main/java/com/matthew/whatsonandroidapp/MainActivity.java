@@ -68,6 +68,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        ImageView splashScreen = (ImageView) findViewById(R.id.splash);
+        splashScreen.setScaleType(ImageView.ScaleType.FIT_XY);
+
         new JsoupListView().execute();
         //Makes button objects so that we can add action listeners
 
