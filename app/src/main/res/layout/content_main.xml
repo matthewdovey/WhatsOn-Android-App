@@ -50,9 +50,11 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:text="@string/default_info_text"
+            android:textStyle="bold"
             android:id="@+id/info1"
             android:layout_below="@+id/button1"
             android:layout_centerHorizontal="true"
+            android:layout_marginBottom="2dp"
             />
 
         <TextView
@@ -90,10 +92,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/default_info_text"
+            android:textStyle="bold"
             android:id="@+id/info2"
             android:layout_below="@+id/button2"
             android:layout_centerHorizontal="true"
-            android:textAppearance="?android:attr/textAppearanceSmall"/>
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:layout_marginBottom="2dp"
+            />
 
         <TextView
             android:layout_width="wrap_content"
@@ -130,10 +135,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/default_info_text"
+            android:textStyle="bold"
             android:id="@+id/info3"
             android:layout_below="@+id/button3"
             android:layout_centerHorizontal="true"
-            android:textAppearance="?android:attr/textAppearanceSmall"/>
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:layout_marginBottom="2dp"
+            />
 
         <TextView
             android:layout_width="wrap_content"
@@ -170,10 +178,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/default_info_text"
+            android:textStyle="bold"
             android:id="@+id/info4"
             android:layout_below="@+id/button4"
             android:layout_centerHorizontal="true"
-            android:textAppearance="?android:attr/textAppearanceSmall"/>
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:layout_marginBottom="2dp"
+            />
 
         <TextView
             android:layout_width="wrap_content"
@@ -210,10 +221,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/default_info_text"
+            android:textStyle="bold"
             android:id="@+id/info5"
             android:layout_below="@+id/button5"
             android:layout_centerHorizontal="true"
-            android:textAppearance="?android:attr/textAppearanceSmall"/>
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:layout_marginBottom="2dp"
+            />
 
         <TextView
             android:layout_width="wrap_content"
@@ -250,10 +264,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/default_info_text"
+            android:textStyle="bold"
             android:id="@+id/info6"
             android:layout_below="@+id/button6"
             android:layout_centerHorizontal="true"
-            android:textAppearance="?android:attr/textAppearanceSmall"/>
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:layout_marginBottom="2dp"
+            />
 
         <TextView
             android:layout_width="wrap_content"
@@ -284,16 +301,20 @@
             android:text="@string/default_title_text"
             android:id="@+id/button7"
             android:layout_below="@+id/imageView7"
-            android:layout_centerHorizontal="true" />
+            android:layout_centerHorizontal="true"
+            />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/default_info_text"
+            android:textStyle="bold"
             android:id="@+id/info7"
             android:layout_below="@+id/button7"
             android:layout_centerHorizontal="true"
-            android:textAppearance="?android:attr/textAppearanceSmall"/>
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:layout_marginBottom="2dp"
+            />
 
         <TextView
             android:layout_width="wrap_content"
@@ -330,10 +351,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/default_info_text"
+            android:textStyle="bold"
             android:id="@+id/info8"
             android:layout_below="@+id/button8"
             android:layout_centerHorizontal="true"
-            android:textAppearance="?android:attr/textAppearanceSmall"/>
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:layout_marginBottom="2dp"
+            />
 
         <TextView
             android:layout_width="wrap_content"
@@ -370,10 +394,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/default_info_text"
+            android:textStyle="bold"
             android:id="@+id/info9"
             android:layout_below="@+id/button9"
             android:layout_centerHorizontal="true"
-            android:textAppearance="?android:attr/textAppearanceSmall"/>
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:layout_marginBottom="2dp"
+            />
 
         <TextView
             android:layout_width="wrap_content"
@@ -410,10 +437,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/default_info_text"
+            android:textStyle="bold"
             android:id="@+id/info10"
             android:layout_below="@+id/button10"
             android:layout_centerHorizontal="true"
-            android:textAppearance="?android:attr/textAppearanceSmall"/>
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:layout_marginBottom="2dp"
+            />
 
         <TextView
             android:layout_width="wrap_content"
@@ -450,10 +480,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/default_info_text"
+            android:textStyle="bold"
             android:id="@+id/info11"
             android:layout_below="@+id/button11"
             android:layout_centerHorizontal="true"
-            android:textAppearance="?android:attr/textAppearanceSmall"/>
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:layout_marginBottom="2dp"
+            />
 
         <TextView
             android:layout_width="wrap_content"
@@ -490,10 +523,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/default_info_text"
+            android:textStyle="bold"
             android:id="@+id/info12"
             android:layout_below="@+id/button12"
             android:layout_centerHorizontal="true"
-            android:textAppearance="?android:attr/textAppearanceSmall"/>
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:layout_marginBottom="2dp"
+            />
 
         <TextView
             android:layout_width="wrap_content"
@@ -530,10 +566,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/default_info_text"
+            android:textStyle="bold"
             android:id="@+id/info13"
             android:layout_below="@+id/button13"
             android:layout_centerHorizontal="true"
-            android:textAppearance="?android:attr/textAppearanceSmall"/>
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:layout_marginBottom="2dp"
+            />
 
         <TextView
             android:layout_width="wrap_content"
@@ -570,10 +609,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/default_info_text"
+            android:textStyle="bold"
             android:id="@+id/info14"
             android:layout_below="@+id/button14"
             android:layout_centerHorizontal="true"
-            android:textAppearance="?android:attr/textAppearanceSmall"/>
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:layout_marginBottom="2dp"
+            />
 
         <TextView
             android:layout_width="wrap_content"
@@ -610,10 +652,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/default_info_text"
+            android:textStyle="bold"
             android:id="@+id/info15"
             android:layout_below="@+id/button15"
             android:layout_centerHorizontal="true"
-            android:textAppearance="?android:attr/textAppearanceSmall"/>
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:layout_marginBottom="2dp"
+            />
 
         <TextView
             android:layout_width="wrap_content"
@@ -651,10 +696,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/default_info_text"
+            android:textStyle="bold"
             android:id="@+id/info16"
             android:layout_below="@+id/button16"
             android:layout_centerHorizontal="true"
             android:textAppearance="?android:attr/textAppearanceSmall"
+            android:layout_marginBottom="2dp"
             />
 
         <TextView
