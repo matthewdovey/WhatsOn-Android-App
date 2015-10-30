@@ -1,6 +1,7 @@
 package com.matthew.whatsonandroidapp;
 
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
@@ -25,8 +26,11 @@ public class EventActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
-        DisplayMetrics metrics = getResources().getDisplayMetrics();
-        System.out.println(metrics.toString());
+        Resources resources = getResources();
+        DisplayMetrics metrics = resources.getDisplayMetrics();
+        int px = metrics.heightPixels;
+        float dp = px / (metrics.densityDpi / 160f);
+        System.out.println(dp);
 
         eventLink = MainActivity.focusLink;
 

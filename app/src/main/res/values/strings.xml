@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">Whats On</string>
+    <string name="splash_desc">Splash Screen Image</string>
+    <string name="img_desc">Event Image</string>
+    <string name="default_title_text">A great title is being thought up!</string>
+    <string name="default_info_text">Check back soon!</string>
+    <string name="default_desc_text">More details for this massive event coming soon!</string>
+    <string name="default_but_text">Proceed To Website</string>
 </resources>

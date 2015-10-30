@@ -5,7 +5,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
         <ImageView
             android:layout_width="fill_parent"
@@ -13,7 +13,8 @@
             android:id="@+id/focusImageId"
             android:layout_alignParentTop="true"
             android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
+            android:layout_alignParentStart="true"
+            android:contentDescription="@string/img_desc"/>
 
         <TextView
             android:layout_width="match_parent"
@@ -21,7 +22,7 @@
             android:paddingLeft="10dp"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textStyle="bold"
-            android:text="Medium Text"
+            android:text="@string/default_title_text"
             android:id="@+id/focusTitleId"
             android:layout_below="@+id/focusImageId"
             android:layout_centerHorizontal="true" />
@@ -32,7 +33,7 @@
             android:paddingLeft="10dp"
             android:textStyle="bold"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Medium Text"
+            android:text="@string/default_info_text"
             android:id="@+id/focusInfoId"
             android:layout_below="@+id/focusTitleId"
             android:layout_centerHorizontal="true" />
@@ -42,7 +43,7 @@
             android:layout_height="wrap_content"
             android:paddingLeft="10dp"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Medium Text"
+            android:text="@string/default_desc_text"
             android:id="@+id/focusDescId"
             android:layout_below="@+id/focusInfoId"
             android:layout_alignParentLeft="true"
@@ -51,7 +52,7 @@
         <Button
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="Proceed To Website"
+            android:text="@string/default_but_text"
             android:id="@+id/webButton"
             android:layout_below="@+id/focusDescId"
             android:layout_alignParentBottom="true"
