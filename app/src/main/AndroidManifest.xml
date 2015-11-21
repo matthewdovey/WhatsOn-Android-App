@@ -13,6 +13,8 @@
         android:theme="@style/AppTheme"
         >
 
+        <!-- Made sure all activities are set to portrait to stop the app from restarting -->
+
         <activity android:name=".MainActivity"
             android:screenOrientation="portrait">
             <intent-filter>

@@ -18,10 +18,13 @@ import android.support.v7.widget.Toolbar;
 import android.test.suitebuilder.annotation.SmallTest;
 import android.text.method.ScrollingMovementMethod;
 import android.util.TypedValue;
+import android.view.LayoutInflater;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.webkit.WebView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -35,12 +38,6 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
-
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
-import org.w3c.dom.Text;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -64,6 +61,9 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<String> eventInfos = new ArrayList<String>();
     private ArrayList<String> eventImages = new ArrayList<String>();
     private ArrayList<String> eventDescs = new ArrayList<String>();
+
+    private Menu optionsMenu;
+    private boolean finished = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -156,17 +156,36 @@ public class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu (Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.main_menu, menu);
+
+        optionsMenu = menu;
+
         return super.onCreateOptionsMenu(menu);
     }
 
-    /*@Override
+    //On click of the refresh button do this
+    //example of how to complete actions on click
+    //Currently using this version of completing an action
+    //Does this actually do what I want it to do?
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if(item.getItemId() == R.id.action_refresh){
-            WebView.reload();
-            return true;
+        switch(item.getItemId()) {
+        case R.id.action_refresh:
+            if (finished) {
+                // Do animation start
+                LayoutInflater inflater = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                ImageView iv = (ImageView)inflater.inflate(R.layout.iv_refresh, null);
+                Animation rotation = AnimationUtils.loadAnimation(this, R.anim.rotate_refresh);
+                rotation.setRepeatCount(Animation.INFINITE);
+                iv.startAnimation(rotation);
+                item.setActionView(iv);
+                new JsoupListView().execute();
+                return true;
+            }
         }
         return super.onOptionsItemSelected(item);
-    }*/
+    }
+
 
     //Refresh animation http://www.michenux.net/android-refresh-item-action-bar-circular-progressbar-578.html
 
@@ -174,7 +193,7 @@ public class MainActivity extends AppCompatActivity {
     public void setRefreshActionButtonState(final boolean refreshing) {
         if (optionsMenu != null) {
             final MenuItem refreshItem = optionsMenu
-                    .findItem(R.id.airport_menuRefresh);
+                    .findItem(R.id.action_refresh);
             if (refreshItem != null) {
                 if (refreshing) {
                     refreshItem.setActionView(R.layout.actionbar_indeterminate_progress);
@@ -184,6 +203,22 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }*/
+
+    //Reset animation back to original picture
+    //http://androidblog.reindustries.com/animating-update-or-loading-refresh-actionbar-button/
+
+    public void resetUpdating()
+    {
+        // Get our refresh item from the menu
+        MenuItem m = optionsMenu.findItem(R.id.action_refresh);
+        if(m.getActionView()!=null)
+        {
+            // Remove the animation.
+            m.getActionView().clearAnimation();
+            m.setActionView(null);
+        }
+    }
+
 
     private class JsoupListView extends AsyncTask<ArrayList<String>,Void,ArrayList<String>>{
 
@@ -195,10 +230,13 @@ public class MainActivity extends AppCompatActivity {
 
             WebScraper whatson = new WebScraper();
 
-            whatson.connect();
+            //I don't think I need this
+            //whatson.connect();
 
             System.out.println("starting");
 
+            //Might not need this if statement
+            //Might be slowing the app down
             if (whatson.connect()==1) {
                 whatson.getLinks();
 
@@ -219,6 +257,7 @@ public class MainActivity extends AppCompatActivity {
 
                 System.out.println("Stage one complete");
             }
+            resetUpdating();
             return null;
         }
 
@@ -232,6 +271,8 @@ public class MainActivity extends AppCompatActivity {
 
             splashScreen.setVisibility(View.GONE);
             mainLayout.setVisibility(View.VISIBLE);
+
+            finished = true;
 
             String link;
             String buttName;

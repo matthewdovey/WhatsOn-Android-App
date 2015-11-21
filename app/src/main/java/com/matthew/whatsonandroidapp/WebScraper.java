@@ -86,9 +86,11 @@ public class WebScraper {
                 itemNumber++;
 
                 if ((itemNumber % 2) == 0) {
-                    span = connection.select("div.event_item.item" + itemNumber + ".itemEven > dl > dt > a > span.msl_event_image");
+                    span = connection.select("div.event_item.item" + itemNumber
+                            + ".itemEven > dl > dt > a > span.msl_event_image");
                 } else {
-                    span = connection.select("div.event_item.item" + itemNumber + ".itemOdd > dl > dt > a > span.msl_event_image");
+                    span = connection.select("div.event_item.item" + itemNumber
+                            + ".itemOdd > dl > dt > a > span.msl_event_image");
                 }
 
                 String check = span.toString();
