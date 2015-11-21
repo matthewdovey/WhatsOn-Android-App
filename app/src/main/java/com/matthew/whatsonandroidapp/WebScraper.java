@@ -30,11 +30,12 @@ public class WebScraper {
     private static ArrayList<Boolean> imageChecks = new ArrayList<Boolean>();
     private static ArrayList<String> tempImages = new ArrayList<String>();
 
+    Document connection;
 
     //Attempting Initial Connection
     public int connect(){
         try {
-            Document connection = Jsoup.connect("https://www.essexstudent.com/whatson/").get();
+            connection = Jsoup.connect("https://www.essexstudent.com/whatson/").get();
             return 1;
         } catch (IOException ex) {
             System.out.println("Connection Failed 00000");
@@ -44,17 +45,11 @@ public class WebScraper {
 
     //Retrieving initial links from http://www.essexstudent.com/whatson/ of all events
     public void getLinks() {
-        try {
-            Document allEvents = Jsoup.connect("https://www.essexstudent.com/whatson/").get();
-            Elements rawLink = allEvents.select("a.msl_event_name");
+        Elements rawLink = connection.select("a.msl_event_name");
 
-            for(Element e: rawLink) {
-                String link = "https://www.essexstudent.com"+e.attr("href");
-                eventLinks.add(link);
-            }
-
-        } catch (IOException ex) {
-            System.out.println("Connection Error: WebPage may not exist 11111");
+        for(Element e: rawLink) {
+            String link = "https://www.essexstudent.com"+e.attr("href");
+            eventLinks.add(link);
         }
     }
 
@@ -84,7 +79,6 @@ public class WebScraper {
         try {
 
             Elements span;
-            Document connection = Jsoup.connect("https://www.essexstudent.com/whatson/").get();
             Elements imageFinder = connection.select("span.msl_event_image");
             int tempInt = 0;
 

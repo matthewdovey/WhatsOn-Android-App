@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -26,12 +25,6 @@ public class EventActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
-        Resources resources = getResources();
-        DisplayMetrics metrics = resources.getDisplayMetrics();
-        int px = metrics.heightPixels;
-        float dp = px / (metrics.densityDpi / 160f);
-        System.out.println(dp);
-
         eventLink = MainActivity.focusLink;
 
         ImageView eventImage = (ImageView) findViewById(R.id.focusImageId);
@@ -52,5 +45,4 @@ public class EventActivity extends AppCompatActivity {
             }
         });
     }
-
 }

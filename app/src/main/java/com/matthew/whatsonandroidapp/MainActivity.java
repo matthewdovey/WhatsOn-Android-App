@@ -136,6 +136,16 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
+    /*@Override 
+    protected void onSaveInstanceState(Bundle bundle) { 
+            bundle.putStringArrayList("links", eventLinks);
+             bundle.putStringArrayList("images", eventImages); 
+            bundle.putStringArrayList("titles", eventTitles); 
+            bundle.putStringArrayList("info", eventInfos); 
+            bundle.putStringArrayList("desc", eventDescs); 
+            super.onSaveInstanceState(bundle); 
+    }*/
+
     private class JsoupListView extends AsyncTask<ArrayList<String>,Void,ArrayList<String>>{
 
         private int x;
@@ -255,5 +265,20 @@ public class MainActivity extends AppCompatActivity {
                 j++;
             }
         }
+
+        /*@Override 
+        protected void onSaveInstanceState(Bundle bundle) { 
+            bundle.putStringArrayList("links", eventLinks); 
+            bundle.putStringArrayList("images", eventImages); 
+            bundle.putStringArrayList("titles", eventTitles); 
+            bundle.putStringArrayList("info", eventInfos); 
+            bundle.putStringArrayList("desc", eventDescs);  
+            bundle.putString("", focusLink); 
+            bundle.putString("", focusImage); 
+            bundle.putString("", focusTitle); 
+            bundle.putString("", focusInfo); 
+            bundle.putString("", focusDesc);  
+            super.onSaveInstanceState(bundle); 
+        }*/
     }
 }
