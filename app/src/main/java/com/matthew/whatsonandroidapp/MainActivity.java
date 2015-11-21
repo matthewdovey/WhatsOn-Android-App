@@ -18,9 +18,11 @@ import android.support.v7.widget.Toolbar;
 import android.test.suitebuilder.annotation.SmallTest;
 import android.text.method.ScrollingMovementMethod;
 import android.util.TypedValue;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.webkit.WebView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -136,6 +138,8 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
+    //I think this populates the ap with saved data
+
     /*@Override 
     protected void onSaveInstanceState(Bundle bundle) { 
             bundle.putStringArrayList("links", eventLinks);
@@ -144,6 +148,41 @@ public class MainActivity extends AppCompatActivity {
             bundle.putStringArrayList("info", eventInfos); 
             bundle.putStringArrayList("desc", eventDescs); 
             super.onSaveInstanceState(bundle); 
+    }*/
+
+    //Refresh button
+
+    @Override
+    public boolean onCreateOptionsMenu (Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    /*@Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if(item.getItemId() == R.id.action_refresh){
+            WebView.reload();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }*/
+
+    //Refresh animation http://www.michenux.net/android-refresh-item-action-bar-circular-progressbar-578.html
+
+    /*
+    public void setRefreshActionButtonState(final boolean refreshing) {
+        if (optionsMenu != null) {
+            final MenuItem refreshItem = optionsMenu
+                    .findItem(R.id.airport_menuRefresh);
+            if (refreshItem != null) {
+                if (refreshing) {
+                    refreshItem.setActionView(R.layout.actionbar_indeterminate_progress);
+                } else {
+                    refreshItem.setActionView(null);
+                }
+            }
+        }
     }*/
 
     private class JsoupListView extends AsyncTask<ArrayList<String>,Void,ArrayList<String>>{
@@ -265,6 +304,8 @@ public class MainActivity extends AppCompatActivity {
                 j++;
             }
         }
+
+        //Saving some data when the app closes
 
         /*@Override 
         protected void onSaveInstanceState(Bundle bundle) { 
