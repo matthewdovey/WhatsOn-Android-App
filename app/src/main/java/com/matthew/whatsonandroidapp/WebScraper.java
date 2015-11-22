@@ -31,15 +31,15 @@ public class WebScraper {
     private static ArrayList<String> tempImages = new ArrayList<String>();
 
     Document connection;
+    boolean established = false;
 
     //Attempting Initial Connection
-    public int connect(){
+    public void connect(){
         try {
             connection = Jsoup.connect("https://www.essexstudent.com/whatson/").get();
-            return 1;
+            established = true;
         } catch (IOException ex) {
             System.out.println("Connection Failed 00000");
-            return 0;
         }
     }
 
@@ -65,7 +65,7 @@ public class WebScraper {
                 //do nothing
                 return null;
             } else {
-                System.out.println("Connection Error: WebPage may not exist22222");
+                System.out.println("Connection Error: WebPage may not exist 22222");
                 return null;
             }
         }
@@ -113,6 +113,9 @@ public class WebScraper {
                     eventImages.add(tempImages.get(tempInt));
                     tempInt++;
                 } else {
+                    //Check this
+                    //Do I need to make more connections or can I deal with this earlier on
+                    //I might eb able to download each event page earlier then use them here
                     Document eventPage = Jsoup.connect(eventLinks.get(n)).get();
                     Elements defaultImage = eventPage.select("#ctl00_ctl22_imgBanner");
                     String imageURL = defaultImage.attr("src");
@@ -194,6 +197,8 @@ public class WebScraper {
     public ArrayList<String> returnDescs() {
         return eventDescs;
     }
+
+    public boolean returnConnected() { return established; }
 
     //Display the eventLinks array
     private void displayLinks() {
