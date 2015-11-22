@@ -173,12 +173,16 @@ public class MainActivity extends AppCompatActivity {
         case R.id.action_refresh:
             if (finished) {
                 // Do animation start
-                LayoutInflater inflater = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                //Just delete if the animation currently being used works perfectly
+                //Otherwise this is another way the animation can be done
+                /*LayoutInflater inflater = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 ImageView iv = (ImageView)inflater.inflate(R.layout.iv_refresh, null);
                 Animation rotation = AnimationUtils.loadAnimation(this, R.anim.rotate_refresh);
                 rotation.setRepeatCount(Animation.INFINITE);
                 iv.startAnimation(rotation);
-                item.setActionView(iv);
+                item.setActionView(iv);*/
+
+                setRefreshActionButtonState(true);
                 new JsoupListView().execute();
                 return true;
             }
@@ -189,7 +193,6 @@ public class MainActivity extends AppCompatActivity {
 
     //Refresh animation http://www.michenux.net/android-refresh-item-action-bar-circular-progressbar-578.html
 
-    /*
     public void setRefreshActionButtonState(final boolean refreshing) {
         if (optionsMenu != null) {
             final MenuItem refreshItem = optionsMenu
@@ -202,13 +205,14 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         }
-    }*/
+    }
 
     //Reset animation back to original picture
     //http://androidblog.reindustries.com/animating-update-or-loading-refresh-actionbar-button/
 
     public void resetUpdating()
     {
+        System.out.println("Reset refresh button");
         // Get our refresh item from the menu
         MenuItem m = optionsMenu.findItem(R.id.action_refresh);
         if(m.getActionView()!=null)
