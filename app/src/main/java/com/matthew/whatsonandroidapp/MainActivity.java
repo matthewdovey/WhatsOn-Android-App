@@ -1,8 +1,10 @@
 package com.matthew.whatsonandroidapp;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -67,6 +69,14 @@ public class MainActivity extends AppCompatActivity {
 
     private Menu optionsMenu;
     private boolean finished = false;
+
+    private EventsDB databaseHelper;
+    private final Context eventContext;
+    private SQLiteDatabase eventDatabase;
+
+    public MainActivity(Context c) {
+        eventContext = c;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -184,18 +194,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    /*
-    @Override
-    public void onRestoreInstanceState(Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
-        eventLinks = savedInstanceState.getStringArrayList("Links");
-        eventTitles = savedInstanceState.getStringArrayList("Images");
-        eventInfos = savedInstanceState.getStringArrayList("Titles");
-        eventImages = savedInstanceState.getStringArrayList("Info");
-        eventDescs = savedInstanceState.getStringArrayList("Desc");
-    }
-    */
-
     private class JsoupListView extends AsyncTask<ArrayList<String>,Void,ArrayList<String>> {
         private int x;
         private int itemNumber = x;
@@ -223,22 +221,16 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(ArrayList<String> strings) {
             super.onPostExecute(strings);
-
             ImageView splashScreen = (ImageView) findViewById(R.id.splash);
             RelativeLayout mainLayout = (RelativeLayout) findViewById(R.id.main);
-
             splashScreen.setVisibility(View.GONE);
             mainLayout.setVisibility(View.VISIBLE);
-
             finished = true;
-
             String link;
             String buttName;
             String infoName;
             String descName;
-
             int j=1;
-
             for(int i=0;i<15;i++) {
                 String imgId = "imageView"+j;
                 if (j == 1) {
@@ -257,9 +249,7 @@ public class MainActivity extends AppCompatActivity {
                 }
                 j++;
             }
-
             j=1;
-
             for(int i=0;i<15;i++) {
                 String butId = "button"+j;
                 int resID = getResources().getIdentifier(butId, "id", "com.matthew.whatsonandroidapp");
@@ -268,9 +258,7 @@ public class MainActivity extends AppCompatActivity {
                 changeButton.setText(buttName);
                 j++;
             }
-
             j=1;
-
             for(int i=0;i<15;i++) {
                 String infoId = "info"+j;
                 int resID = getResources().getIdentifier(infoId, "id", "com.matthew.whatsonandroidapp");
@@ -279,9 +267,7 @@ public class MainActivity extends AppCompatActivity {
                 changeInfo.setText(infoName);
                 j++;
             }
-
             j=1;
-
             for(int i=0;i<15;i++) {
                 String descId = "desc"+j;
                 int resID = getResources().getIdentifier(descId, "id", "com.matthew.whatsonandroidapp");
@@ -294,42 +280,39 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    public MainActivity open() {
+        databaseHelper = new EventsDB(eventContext);
+        eventDatabase = databaseHelper.getWritableDatabase();
+        return this;
+    }
+
+    public long saveData(String link, String title, String info, String desc, String image) {
+        ContentValues values = new ContentValues();
+        values.put(databaseHelper.COLUMN_EVENTLINK, link);
+        values.put(databaseHelper.COLUMN_EVENTNAME, title);
+        values.put(databaseHelper.COLUMN_EVENTINFO, info);
+        values.put(databaseHelper.COLUMN_EVENTDESC, desc);
+        values.put(databaseHelper.COLUMN_EVENTIMAGE, image);
+        return eventDatabase.insert(databaseHelper.TABLE_EVENTS, null, values);
+    }
+
+    public void close() {
+        databaseHelper.close();
+    }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
 
-        SharedPreferences sharedpreferences = SharedPreferences.getDefaultSharedPreferences(this);
-        SharedPreferences.Editor editor = sharedpreferences.edit();
-
-        Set<String> linkSet = new HashSet<String>();
-        Set<String> titleSet = new HashSet<String>();
-        Set<String> infoSet = new HashSet<String>();
-        Set<String> imageSet = new HashSet<String>();
-        Set<String> descSet = new HashSet<String>();
-
-        linkSet.addAll(eventLinks);
-        titleSet.addAll(eventTitles);
-        infoSet.addAll(eventInfos);
-        imageSet.addAll(eventImages);
-        descSet.addAll(eventDescs);
-
-        editor.putStringSet("links", linkSet);
-        editor.putStringSet("images", titleSet);
-        editor.putStringSet("titles", infoSet);
-        editor.putStringSet("info", imageSet);
-        editor.putStringSet("desc", descSet);
-
-        editor.apply();
-
-        /*
-        //Retrieve the values
-        Set<String> set = myScores.getStringSet("key", null);
-
-        //Set the values
-        Set<String> set = new HashSet<String>();
-        set.addAll(listOfExistingScores);
-        scoreEditor.putStringSet("key", set);
-        scoreEditor.commit();
-        */
+        try {
+            open();
+            for (int i = 0; i < eventLinks.size();i++) {
+                saveData(eventLinks.get(i), eventTitles.get(i), eventInfos.get(i)
+                        , eventDescs.get(i), eventImages.get(i));
+            }
+            close();
+        } catch (Exception e) {
+            System.out.println("Error: Could not connect to database");
+        }
     }
 }
