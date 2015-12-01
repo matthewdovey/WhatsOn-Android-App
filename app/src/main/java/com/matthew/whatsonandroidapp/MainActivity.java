@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -47,6 +48,7 @@ import java.io.InputStream;
 import java.lang.reflect.Array;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.sql.SQLException;
 import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -68,15 +70,26 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<String> eventDescs = new ArrayList<String>();
 
     private Menu optionsMenu;
-    private boolean finished = false;
+    private boolean finished;
 
+    /*
+    //Database
     private EventsDB databaseHelper;
     private final Context eventContext;
     private SQLiteDatabase eventDatabase;
+    */
 
+    public MainActivity() {
+        finished = false;
+    }
+
+    /*
+    //Database
     public MainActivity(Context c) {
         eventContext = c;
+        finished = false;
     }
+    */
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -86,7 +99,24 @@ public class MainActivity extends AppCompatActivity {
         ImageView splashScreen = (ImageView) findViewById(R.id.splash);
         splashScreen.setScaleType(ImageView.ScaleType.FIT_XY);
 
-        new JsoupListView().execute();
+        System.out.println("Trying!!!!");
+
+        /*
+        //Database
+        //EventsDB data = new EventsDB(this);
+        try {
+            open();
+            getData();
+            close();
+        } catch (Exception e) {
+            System.out.println("Error: Could not retrieve data from database");
+        }
+        */
+
+        if (eventLinks.isEmpty()) {
+            System.out.println("Arrays are empty! - Running web scraper");
+            new JsoupListView().execute();
+        }
 
         Button event1 = (Button) findViewById(R.id.button1);
         Button event2 = (Button) findViewById(R.id.button2);
@@ -280,6 +310,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    /*
     public MainActivity open() {
         databaseHelper = new EventsDB(eventContext);
         eventDatabase = databaseHelper.getWritableDatabase();
@@ -300,6 +331,41 @@ public class MainActivity extends AppCompatActivity {
         databaseHelper.close();
     }
 
+    public String getData() {
+        String[] columns = new String[] {databaseHelper.COLUMN_ID, databaseHelper.COLUMN_EVENTLINK
+                , databaseHelper.COLUMN_EVENTNAME, databaseHelper.COLUMN_EVENTINFO
+                , databaseHelper.COLUMN_EVENTDESC, databaseHelper.COLUMN_EVENTIMAGE};
+        Cursor c = eventDatabase.query(databaseHelper.TABLE_EVENTS, columns, null, null, null, null, null);
+
+        String link = "";
+        String title = "";
+        String info = "";
+        String desc = "";
+        String image = "";
+
+        //int rowID = c.getColumnIndex(databaseHelper.COLUMN_ID);
+        int rowLink = c.getColumnIndex(databaseHelper.COLUMN_EVENTLINK);
+        int rowTitle = c.getColumnIndex(databaseHelper.COLUMN_EVENTNAME);
+        int rowInfo = c.getColumnIndex(databaseHelper.COLUMN_EVENTINFO);
+        int rowDesc = c.getColumnIndex(databaseHelper.COLUMN_EVENTDESC);
+        int rowImage = c.getColumnIndex(databaseHelper.COLUMN_EVENTIMAGE);
+
+        for (c.moveToFirst(); !c.isAfterLast(); c.moveToNext()) {
+            link = link + c.getString(rowLink);
+            title = title + c.getString(rowTitle);
+            info = info + c.getString(rowInfo);
+            desc = desc + c.getString(rowDesc);
+            image = image + c.getString(rowImage);
+
+            eventLinks.add(link);
+            eventTitles.add(title);
+            eventInfos.add(info);
+            eventDescs.add(desc);
+            eventImages.add(image);
+        }
+        return null;
+    }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -315,4 +381,5 @@ public class MainActivity extends AppCompatActivity {
             System.out.println("Error: Could not connect to database");
         }
     }
+    */
 }
