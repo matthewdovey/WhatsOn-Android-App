@@ -3,7 +3,9 @@ package com.matthew.whatsonandroidapp;
 /**
  * Created by matthew on 20/11/15.
  */
+import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
@@ -40,4 +42,63 @@ public class EventsDB extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_EVENTS);
         onCreate(db);
     }
+
+    //http://mobilesiri.com/android-sqlite-database-tutorial-using-android-studio/
+    /*public void addShop(Event event) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(KEY_NAME, shop.getName()); // Shop Name
+        values.put(KEY_SH_ADDR, shop.getAddress()); // Shop Phone Number
+
+        // Inserting Row
+        db.insert(TABLE_SHOPS, null, values);
+        db.close(); // Closing database connection
+    }
+
+    public Shop getShop(int id) {
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = db.query(TABLE_SHOPS, new String[]{KEY_ID,
+                        KEY_NAME, KEY_SH_ADDR}, KEY_ID + "=?",
+                new String[]{String.valueOf(id)}, null, null, null, null);
+        if (cursor != null)
+            cursor.moveToFirst();
+
+        Shop contact = new Shop(Integer.parseInt(cursor.getString(0)),
+                cursor.getString(1), cursor.getString(2));
+        // return shop
+        return contact;
+    }
+
+    public List<Shop> getAllShops() {
+        List<Shop> shopList = new ArrayList<Shop>();
+        // Select All Query
+        String selectQuery = "SELECT * FROM " + TABLE_SHOPS;
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        // looping through all rows and adding to list
+        if (cursor.moveToFirst()) {
+            do {
+                Shop shop = new Shop();
+                shop.setId(Integer.parseInt(cursor.getString(0)));
+                shop.setName(cursor.getString(1));
+                shop.setAddress(cursor.getString(2));
+        // Adding contact to list
+                shopList.add(shop);
+            } while (cursor.moveToNext());
+        }
+        // return contact list
+        return shopList;
+    }
+
+    // Deleting a shop
+    public void deleteShop(Shop shop) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_SHOPS, KEY_ID + " = ?",
+                new String[] { String.valueOf(shop.getId()) });
+        db.close();
+    }*/
 }

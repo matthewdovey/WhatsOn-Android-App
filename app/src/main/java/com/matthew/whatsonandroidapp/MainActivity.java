@@ -54,6 +54,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import android.content.Context;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -71,25 +72,12 @@ public class MainActivity extends AppCompatActivity {
 
     private Menu optionsMenu;
     private boolean finished;
-
-    /*
-    //Database
-    private EventsDB databaseHelper;
-    private final Context eventContext;
-    private SQLiteDatabase eventDatabase;
-    */
+    private boolean populated;
+    webscraperAdapter database = new webscraperAdapter(this);
 
     public MainActivity() {
         finished = false;
     }
-
-    /*
-    //Database
-    public MainActivity(Context c) {
-        eventContext = c;
-        finished = false;
-    }
-    */
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -99,24 +87,33 @@ public class MainActivity extends AppCompatActivity {
         ImageView splashScreen = (ImageView) findViewById(R.id.splash);
         splashScreen.setScaleType(ImageView.ScaleType.FIT_XY);
 
-        System.out.println("Trying!!!!");
+        database.getAllData();
 
-        /*
-        //Database
-        //EventsDB data = new EventsDB(this);
-        try {
-            open();
-            getData();
-            close();
-        } catch (Exception e) {
-            System.out.println("Error: Could not retrieve data from database");
-        }
-        */
+        System.out.println(Integer.toString(database.getEventLinks().size()));
+        System.out.println(Integer.toString(database.getEventTitles().size()));
+        System.out.println(Integer.toString(database.getEventDescs().size()));
+        System.out.println(Integer.toString(database.getEventInfos().size()));
+        System.out.println(Integer.toString(database.getEventImages().size()));
 
-        if (eventLinks.isEmpty()) {
-            System.out.println("Arrays are empty! - Running web scraper");
+        if (database.getEventLinks().size()==0 || database.getEventTitles().size()==0
+                || database.getEventDescs().size()==0 || database.getEventInfos().size()==0
+                || database.getEventImages().size()==0 ) {
             new JsoupListView().execute();
+        } else {
+            populated = true;
+
+            eventLinks = database.getEventLinks();
+            eventTitles = database.getEventTitles();
+            eventInfos = database.getEventInfos();
+            eventDescs = database.getEventDescs();
+            eventImages = database.getEventImages();
+
+            populateMainActivity();
+            finished = true;
         }
+
+        System.out.print("Event links size: ");
+        System.out.println(eventLinks.size());
 
         Button event1 = (Button) findViewById(R.id.button1);
         Button event2 = (Button) findViewById(R.id.button2);
@@ -149,10 +146,6 @@ public class MainActivity extends AppCompatActivity {
         event13.setOnClickListener(buttonCheck);
         event14.setOnClickListener(buttonCheck);
         event15.setOnClickListener(buttonCheck);
-    }
-
-    protected void onStart(Bundle savedInstanceState){
-        //Populate array lists with saved data if they are not empty
     }
 
     View.OnClickListener buttonCheck = new View.OnClickListener() {
@@ -224,6 +217,63 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    public void populateMainActivity() {
+        ImageView splash = (ImageView) findViewById(R.id.splash);
+        RelativeLayout mainLayout = (RelativeLayout) findViewById(R.id.main);
+        splash.setVisibility(View.GONE);
+        mainLayout.setVisibility(View.VISIBLE);
+        String link;
+        String buttName;
+        String infoName;
+        String descName;
+        int j=1;
+        for(int i=0;i<15;i++) {
+            String imgId = "imageView"+j;
+            if (j == 1) {
+                ImageView changeImage = (ImageView) findViewById(R.id.imageView);
+                link = eventImages.get(i);
+                Picasso.with(changeImage.getContext()).load(link).into(changeImage);
+            } else {
+                int resID = getResources().getIdentifier(imgId, "id", "com.matthew.whatsonandroidapp");
+                ImageView changeImage = (ImageView) findViewById(resID);
+                link = eventImages.get(i);
+                try {
+                    Picasso.with(changeImage.getContext()).load(link).into(changeImage);
+                } catch (Exception e) {
+                    System.out.println("ERROR: Unable to use picture");
+                }
+            }
+            j++;
+        }
+        j=1;
+        for(int i=0;i<15;i++) {
+            String butId = "button"+j;
+            int resID = getResources().getIdentifier(butId, "id", "com.matthew.whatsonandroidapp");
+            Button changeButton = (Button) findViewById(resID);
+            buttName = eventTitles.get(i);
+            changeButton.setText(buttName);
+            j++;
+        }
+        j=1;
+        for(int i=0;i<15;i++) {
+            String infoId = "info"+j;
+            int resID = getResources().getIdentifier(infoId, "id", "com.matthew.whatsonandroidapp");
+            TextView changeInfo = (TextView) findViewById(resID);
+            infoName = eventInfos.get(i);
+            changeInfo.setText(infoName);
+            j++;
+        }
+        j=1;
+        for(int i=0;i<15;i++) {
+            String descId = "desc"+j;
+            int resID = getResources().getIdentifier(descId, "id", "com.matthew.whatsonandroidapp");
+            TextView changeDesc = (TextView) findViewById(resID);
+            descName = eventDescs.get(i);
+            changeDesc.setText(descName);
+            j++;
+        }
+    }
+
     private class JsoupListView extends AsyncTask<ArrayList<String>,Void,ArrayList<String>> {
         private int x;
         private int itemNumber = x;
@@ -251,10 +301,10 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(ArrayList<String> strings) {
             super.onPostExecute(strings);
-            ImageView splashScreen = (ImageView) findViewById(R.id.splash);
-            RelativeLayout mainLayout = (RelativeLayout) findViewById(R.id.main);
-            splashScreen.setVisibility(View.GONE);
-            mainLayout.setVisibility(View.VISIBLE);
+            ImageView splash = (ImageView) findViewById(R.id.splash);
+            RelativeLayout main = (RelativeLayout) findViewById(R.id.main);
+            splash.setVisibility(View.GONE);
+            main.setVisibility(View.VISIBLE);
             finished = true;
             String link;
             String buttName;
@@ -310,76 +360,22 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    /*
-    public MainActivity open() {
-        databaseHelper = new EventsDB(eventContext);
-        eventDatabase = databaseHelper.getWritableDatabase();
-        return this;
-    }
+    public void onBackPressed(){
+        super.onBackPressed();
+        System.out.println("Destroying application...");
+        Log.d("inOnDestroy", "Hello");
+        if (!(populated)) {
+            try{
 
-    public long saveData(String link, String title, String info, String desc, String image) {
-        ContentValues values = new ContentValues();
-        values.put(databaseHelper.COLUMN_EVENTLINK, link);
-        values.put(databaseHelper.COLUMN_EVENTNAME, title);
-        values.put(databaseHelper.COLUMN_EVENTINFO, info);
-        values.put(databaseHelper.COLUMN_EVENTDESC, desc);
-        values.put(databaseHelper.COLUMN_EVENTIMAGE, image);
-        return eventDatabase.insert(databaseHelper.TABLE_EVENTS, null, values);
-    }
+                for(int i = 0; i < eventLinks.size();i++){
+                    database.insertData(eventLinks.get(i),eventImages.get(i)
+                            ,eventTitles.get(i),eventInfos.get(i),eventDescs.get(i));
+                }
 
-    public void close() {
-        databaseHelper.close();
-    }
-
-    public String getData() {
-        String[] columns = new String[] {databaseHelper.COLUMN_ID, databaseHelper.COLUMN_EVENTLINK
-                , databaseHelper.COLUMN_EVENTNAME, databaseHelper.COLUMN_EVENTINFO
-                , databaseHelper.COLUMN_EVENTDESC, databaseHelper.COLUMN_EVENTIMAGE};
-        Cursor c = eventDatabase.query(databaseHelper.TABLE_EVENTS, columns, null, null, null, null, null);
-
-        String link = "";
-        String title = "";
-        String info = "";
-        String desc = "";
-        String image = "";
-
-        //int rowID = c.getColumnIndex(databaseHelper.COLUMN_ID);
-        int rowLink = c.getColumnIndex(databaseHelper.COLUMN_EVENTLINK);
-        int rowTitle = c.getColumnIndex(databaseHelper.COLUMN_EVENTNAME);
-        int rowInfo = c.getColumnIndex(databaseHelper.COLUMN_EVENTINFO);
-        int rowDesc = c.getColumnIndex(databaseHelper.COLUMN_EVENTDESC);
-        int rowImage = c.getColumnIndex(databaseHelper.COLUMN_EVENTIMAGE);
-
-        for (c.moveToFirst(); !c.isAfterLast(); c.moveToNext()) {
-            link = link + c.getString(rowLink);
-            title = title + c.getString(rowTitle);
-            info = info + c.getString(rowInfo);
-            desc = desc + c.getString(rowDesc);
-            image = image + c.getString(rowImage);
-
-            eventLinks.add(link);
-            eventTitles.add(title);
-            eventInfos.add(info);
-            eventDescs.add(desc);
-            eventImages.add(image);
-        }
-        return null;
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-
-        try {
-            open();
-            for (int i = 0; i < eventLinks.size();i++) {
-                saveData(eventLinks.get(i), eventTitles.get(i), eventInfos.get(i)
-                        , eventDescs.get(i), eventImages.get(i));
+            } catch (Exception e) {
+                System.out.println("Error: Could not connect to database");
             }
-            close();
-        } catch (Exception e) {
-            System.out.println("Error: Could not connect to database");
+            finish();
         }
     }
-    */
 }
