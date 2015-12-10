@@ -1,104 +1,124 @@
 package com.matthew.whatsonandroidapp;
 
-/**
- * Created by matthew on 20/11/15.
- */
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
-public class EventsDB extends SQLiteOpenHelper {
+import java.util.ArrayList;
 
-    private static final int DATABASE_VERSION = 1;
-    private static final String DATABASE_NAME = "eventsDB.db";
-    public static final String TABLE_EVENTS = "events";
+/**
+ * Created by ayuub2 on 02/12/2015.
+ */
+public class EventsDB {
+    DatabaseHandler database;
 
-    public static final String COLUMN_ID = "_id";
-    public static final String COLUMN_EVENTLINK = "link";
-    public static final String COLUMN_EVENTNAME = "event";
-    public static final String COLUMN_EVENTINFO = "info";
-    public static final String COLUMN_EVENTDESC = "description";
-    public static final String COLUMN_EVENTIMAGE = "image";
+    private ArrayList<String> eventLinks = new ArrayList<String>();
+    private ArrayList<String> eventTitles = new ArrayList<String>();
+    private ArrayList<String> eventInfos = new ArrayList<String>();
+    private ArrayList<String> eventImages = new ArrayList<String>();
+    private ArrayList<String> eventDescs = new ArrayList<String>();
 
-    public EventsDB(Context context) {
-        super(context, DATABASE_NAME, null, DATABASE_VERSION);
+    public EventsDB(Context context){
+        database = new DatabaseHandler(context);
     }
 
-    @Override
-    public void onCreate(SQLiteDatabase db) {
-        String CREATE_EVENTS_TABLE = "CREATE TABLE " +
-                TABLE_EVENTS + " (" + COLUMN_ID
-                + " INTEGER PRIMARY KEY AUTOINCREMENT," + COLUMN_EVENTLINK
-                + " TEXT NOT NULL," + COLUMN_EVENTNAME + " TEXT NOT NULL," + COLUMN_EVENTINFO
-                + " TEXT NOT NULL," + COLUMN_EVENTDESC + " TEXT NOT NULL," + COLUMN_EVENTIMAGE
-                + " TEXT NOT NULL" + ");";
-        db.execSQL(CREATE_EVENTS_TABLE);
+    public ArrayList<String> getEventLinks() {return eventLinks;}
+    public ArrayList<String> getEventTitles() {return eventTitles;}
+    public ArrayList<String> getEventInfos() {return eventInfos;}
+    public ArrayList<String> getEventDescs() {return eventDescs;}
+    public ArrayList<String> getEventImages() {return eventImages;}
+
+    public long insertData(String links, String images, String titles, String info,String desc){
+        SQLiteDatabase db = database.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(DatabaseHandler.LINKS, links);
+        contentValues.put(DatabaseHandler.IMAGES, images);
+        contentValues.put(DatabaseHandler.TITLES, titles);
+        contentValues.put(DatabaseHandler.INFO, info);
+        contentValues.put(DatabaseHandler.DESCRIPTION, desc);
+        long id = db.insert(DatabaseHandler.TABLE_NAME,null,contentValues);
+        return id;
     }
+    public void getAllData(){
+        SQLiteDatabase db = database.getWritableDatabase();
+        String[] columns = {DatabaseHandler.UID, DatabaseHandler.LINKS
+                ,DatabaseHandler.IMAGES,DatabaseHandler.TITLES
+                ,DatabaseHandler.INFO,DatabaseHandler.DESCRIPTION};
 
-    @Override
-    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_EVENTS);
-        onCreate(db);
-    }
+        Cursor cursor =  db.query(DatabaseHandler.TABLE_NAME, columns, null, null, null, null, null);
 
-    //http://mobilesiri.com/android-sqlite-database-tutorial-using-android-studio/
-    /*public void addShop(Event event) {
-        SQLiteDatabase db = this.getWritableDatabase();
+        int rowLink = cursor.getColumnIndex(DatabaseHandler.LINKS);
+        int rowTitle = cursor.getColumnIndex(DatabaseHandler.TITLES);
+        int rowInfo = cursor.getColumnIndex(DatabaseHandler.INFO);
+        int rowDesc = cursor.getColumnIndex(DatabaseHandler.DESCRIPTION);
+        int rowImage = cursor.getColumnIndex(DatabaseHandler.IMAGES);
 
-        ContentValues values = new ContentValues();
-        values.put(KEY_NAME, shop.getName()); // Shop Name
-        values.put(KEY_SH_ADDR, shop.getAddress()); // Shop Phone Number
+        while(cursor.moveToNext()){
+            System.out.println(cursor.getString(rowLink));
+            System.out.println(cursor.getString(rowTitle));
 
-        // Inserting Row
-        db.insert(TABLE_SHOPS, null, values);
-        db.close(); // Closing database connection
-    }
-
-    public Shop getShop(int id) {
-        SQLiteDatabase db = this.getReadableDatabase();
-
-        Cursor cursor = db.query(TABLE_SHOPS, new String[]{KEY_ID,
-                        KEY_NAME, KEY_SH_ADDR}, KEY_ID + "=?",
-                new String[]{String.valueOf(id)}, null, null, null, null);
-        if (cursor != null)
-            cursor.moveToFirst();
-
-        Shop contact = new Shop(Integer.parseInt(cursor.getString(0)),
-                cursor.getString(1), cursor.getString(2));
-        // return shop
-        return contact;
-    }
-
-    public List<Shop> getAllShops() {
-        List<Shop> shopList = new ArrayList<Shop>();
-        // Select All Query
-        String selectQuery = "SELECT * FROM " + TABLE_SHOPS;
-
-        SQLiteDatabase db = this.getWritableDatabase();
-        Cursor cursor = db.rawQuery(selectQuery, null);
-
-        // looping through all rows and adding to list
-        if (cursor.moveToFirst()) {
-            do {
-                Shop shop = new Shop();
-                shop.setId(Integer.parseInt(cursor.getString(0)));
-                shop.setName(cursor.getString(1));
-                shop.setAddress(cursor.getString(2));
-        // Adding contact to list
-                shopList.add(shop);
-            } while (cursor.moveToNext());
+            eventLinks.add(cursor.getString(rowLink));
+            eventTitles.add(cursor.getString(rowTitle));
+            eventInfos.add(cursor.getString(rowInfo));
+            eventDescs.add(cursor.getString(rowDesc));
+            eventImages.add(cursor.getString(rowImage));
         }
-        // return contact list
-        return shopList;
+
     }
 
-    // Deleting a shop
-    public void deleteShop(Shop shop) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(TABLE_SHOPS, KEY_ID + " = ?",
-                new String[] { String.valueOf(shop.getId()) });
-        db.close();
-    }*/
+    static class DatabaseHandler extends SQLiteOpenHelper{
+        private static final String DATABASE_NAME = "WebScraperDatabase";
+        private static final String TABLE_NAME = "APPDATA";
+        private static final String UID = "_id";
+        private static final String LINKS = "Links";
+        private static final String IMAGES = "Images";
+        private static final String TITLES = "Titles";
+        private static final String INFO = "Info";
+        private static final String DESCRIPTION = "Description";
+        private Context context;
+        private static int DATABASE_VERSION = 1;
+        private static final String CREATE_TABLE = "CREATE TABLE "+TABLE_NAME+" ("+UID+" INTEGER PRIMARY KEY AUTOINCREMENT, "+LINKS+" VARCHAR(255), "+IMAGES+" VARCHAR(255), "+TITLES+" VARCHAR(255), "+INFO+" VARCHAR(255), "+DESCRIPTION+" VARCHAR(255));";
+        private static final String DROP_TABLE = "DROP TABLE IF EXISTS "+TABLE_NAME;
+
+        public DatabaseHandler(Context context){
+            super(context, DATABASE_NAME,null,DATABASE_VERSION);
+            this.context = context;
+            Log.d("databaseCreated", "DATABASE HAS BEEN CREATED!");
+            Log.d("Table",CREATE_TABLE);
+        }
+
+        @Override
+        public void onCreate(SQLiteDatabase db) {
+        /* this method creates the first instance of the database, so you need to fill this with tables
+        and data from the arrays in main activity.
+         */
+            try {
+                db.execSQL(CREATE_TABLE);
+            }
+            catch (SQLException e){
+                e.printStackTrace();
+            }
+            Log.d("databaseFullyCreated", "DATABASE HAS BEEN CREATED THROUGH ON CREATE!");
+
+        }
+
+        @Override
+        public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        /*this will upgrade the database, so when the refresh button is called the new
+        data from the webscraper will be re added. and old ones will need to be removed so that we can
+        keep the size down. call on create at the end with the db name in parameters
+         */
+            try {
+                db.execSQL(DROP_TABLE);
+                onCreate(db);
+            }
+            catch (SQLException e){
+                e.printStackTrace();
+            }
+        }
+    }
 }

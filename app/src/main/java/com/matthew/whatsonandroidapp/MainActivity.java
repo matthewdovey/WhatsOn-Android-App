@@ -73,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
     private Menu optionsMenu;
     private boolean finished;
     private boolean populated;
-    webscraperAdapter database = new webscraperAdapter(this);
+    EventsDB database = new EventsDB(this);
 
     public MainActivity() {
         finished = false;
