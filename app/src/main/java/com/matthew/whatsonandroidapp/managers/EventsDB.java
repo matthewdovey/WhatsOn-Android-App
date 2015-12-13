@@ -1,4 +1,4 @@
-package com.matthew.whatsonandroidapp;
+package com.matthew.whatsonandroidapp.managers;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -58,9 +58,6 @@ public class EventsDB {
         int rowImage = cursor.getColumnIndex(DatabaseHandler.IMAGES);
 
         while(cursor.moveToNext()){
-            System.out.println(cursor.getString(rowLink));
-            System.out.println(cursor.getString(rowTitle));
-
             eventLinks.add(cursor.getString(rowLink));
             eventTitles.add(cursor.getString(rowTitle));
             eventInfos.add(cursor.getString(rowInfo));
@@ -87,8 +84,8 @@ public class EventsDB {
         public DatabaseHandler(Context context){
             super(context, DATABASE_NAME,null,DATABASE_VERSION);
             this.context = context;
-            Log.d("databaseCreated", "DATABASE HAS BEEN CREATED!");
-            Log.d("Table",CREATE_TABLE);
+            //Log.d("databaseCreated", "DATABASE HAS BEEN CREATED!");
+            //Log.d("Table",CREATE_TABLE);
         }
 
         @Override
@@ -102,7 +99,7 @@ public class EventsDB {
             catch (SQLException e){
                 e.printStackTrace();
             }
-            Log.d("databaseFullyCreated", "DATABASE HAS BEEN CREATED THROUGH ON CREATE!");
+            //Log.d("databaseFullyCreated", "DATABASE HAS BEEN CREATED THROUGH ON CREATE!");
 
         }
 

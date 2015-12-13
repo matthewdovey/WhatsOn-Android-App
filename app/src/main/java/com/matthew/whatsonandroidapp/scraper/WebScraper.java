@@ -1,4 +1,4 @@
-package com.matthew.whatsonandroidapp;
+package com.matthew.whatsonandroidapp.scraper;
 
 /**
  * Created by matthew on 12/10/15.

@@ -1,60 +1,25 @@
-package com.matthew.whatsonandroidapp;
-import android.content.ContentValues;
-import android.content.Context;
+package com.matthew.whatsonandroidapp.activities;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.res.Resources;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
-import android.media.Image;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.PersistableBundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
+import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.test.suitebuilder.annotation.SmallTest;
-import android.text.method.ScrollingMovementMethod;
-import android.util.TypedValue;
-import android.view.LayoutInflater;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.webkit.WebView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.util.Log;
-import android.widget.EditText;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.matthew.whatsonandroidapp.managers.EventsDB;
+import com.matthew.whatsonandroidapp.R;
+import com.matthew.whatsonandroidapp.scraper.WebScraper;
 import com.squareup.picasso.Picasso;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.lang.reflect.Array;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.sql.SQLException;
-import java.sql.SQLOutput;
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import android.content.Context;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -63,6 +28,8 @@ public class MainActivity extends AppCompatActivity {
     static String focusTitle;
     static String focusInfo;
     static String focusDesc;
+
+    private CountDownTimer splashTimer;
 
     private ArrayList<String> eventLinks = new ArrayList<String>();
     private ArrayList<String> eventTitles = new ArrayList<String>();
@@ -89,12 +56,6 @@ public class MainActivity extends AppCompatActivity {
 
         database.getAllData();
 
-        System.out.println(Integer.toString(database.getEventLinks().size()));
-        System.out.println(Integer.toString(database.getEventTitles().size()));
-        System.out.println(Integer.toString(database.getEventDescs().size()));
-        System.out.println(Integer.toString(database.getEventInfos().size()));
-        System.out.println(Integer.toString(database.getEventImages().size()));
-
         if (database.getEventLinks().size()==0 || database.getEventTitles().size()==0
                 || database.getEventDescs().size()==0 || database.getEventInfos().size()==0
                 || database.getEventImages().size()==0 ) {
@@ -109,11 +70,25 @@ public class MainActivity extends AppCompatActivity {
             eventImages = database.getEventImages();
 
             populateMainActivity();
-            finished = true;
-        }
 
-        System.out.print("Event links size: ");
-        System.out.println(eventLinks.size());
+            splashTimer = new CountDownTimer(3000,3000) {
+
+                RelativeLayout mainLayout = (RelativeLayout) findViewById(R.id.main);
+                ImageView splashScreen = (ImageView) findViewById(R.id.splash);
+
+                @Override
+                public void onTick(long millisUntilFinished) {
+                }
+
+                @Override
+                public void onFinish() {
+                    splashScreen.setVisibility(View.GONE);
+                    mainLayout.setVisibility(View.VISIBLE);
+                }
+            };
+
+            splashTimer.start();
+        }
 
         Button event1 = (Button) findViewById(R.id.button1);
         Button event2 = (Button) findViewById(R.id.button2);
@@ -218,10 +193,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void populateMainActivity() {
-        ImageView splash = (ImageView) findViewById(R.id.splash);
-        RelativeLayout mainLayout = (RelativeLayout) findViewById(R.id.main);
-        splash.setVisibility(View.GONE);
-        mainLayout.setVisibility(View.VISIBLE);
         String link;
         String buttName;
         String infoName;
@@ -360,8 +331,8 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void onBackPressed(){
-        super.onBackPressed();
+    public void onDestroy(){
+        super.onDestroy();
         System.out.println("Destroying application...");
         Log.d("inOnDestroy", "Hello");
         if (!(populated)) {

@@ -1,7 +1,9 @@
-package com.matthew.whatsonandroidapp;
+package com.matthew.whatsonandroidapp.activities;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+
+import com.matthew.whatsonandroidapp.R;
 
 /**
  * Created by matthew on 10/12/15.

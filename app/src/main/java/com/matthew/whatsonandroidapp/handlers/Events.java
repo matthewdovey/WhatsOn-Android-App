@@ -1,4 +1,4 @@
-package com.matthew.whatsonandroidapp;
+package com.matthew.whatsonandroidapp.handlers;
 
 /**
  * Created by matthew on 20/11/15.

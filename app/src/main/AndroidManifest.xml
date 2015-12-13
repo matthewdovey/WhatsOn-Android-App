@@ -15,7 +15,7 @@
 
         <!-- Made sure all activities are set to portrait to stop the app from restarting -->
 
-        <activity android:name=".MainActivity"
+        <activity android:name=".activities.MainActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,11 +23,11 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".EventActivity"
+        <activity android:name=".activities.EventActivity"
             android:screenOrientation="portrait">
         </activity>
 
-        <activity android:name=".WebActivity"
+        <activity android:name=".activities.WebActivity"
             android:screenOrientation="portrait">
         </activity>
 

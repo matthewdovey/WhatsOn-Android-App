@@ -7,7 +7,7 @@
     <ImageView
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:src="@drawable/blacksplash125_20"
+        android:src="@drawable/splash720x1280"
         android:id="@+id/splash"
         android:contentDescription="@string/splash_desc"/>
 

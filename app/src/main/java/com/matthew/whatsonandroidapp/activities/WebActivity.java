@@ -1,14 +1,12 @@
-package com.matthew.whatsonandroidapp;
+package com.matthew.whatsonandroidapp.activities;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
-import android.widget.TextView;
+
+import com.matthew.whatsonandroidapp.R;
+import com.matthew.whatsonandroidapp.activities.EventActivity;
 
 public class WebActivity extends AppCompatActivity {
 
