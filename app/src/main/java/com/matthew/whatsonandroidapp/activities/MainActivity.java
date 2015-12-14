@@ -38,12 +38,12 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<String> eventDescs = new ArrayList<String>();
 
     private Menu optionsMenu;
-    private boolean finished;
-    private boolean populated;
+    private boolean splashFinished;
+    private boolean arraysPopulated;
     EventsDB database = new EventsDB(this);
 
     public MainActivity() {
-        finished = false;
+        splashFinished = false;
     }
 
     @Override
@@ -58,10 +58,10 @@ public class MainActivity extends AppCompatActivity {
 
         if (database.getEventLinks().size()==0 || database.getEventTitles().size()==0
                 || database.getEventDescs().size()==0 || database.getEventInfos().size()==0
-                || database.getEventImages().size()==0 ) {
+                || database.getEventImages().size() ==0 ) {
             new JsoupListView().execute();
         } else {
-            populated = true;
+            arraysPopulated = true;
 
             eventLinks = database.getEventLinks();
             eventTitles = database.getEventTitles();
@@ -84,6 +84,7 @@ public class MainActivity extends AppCompatActivity {
                 public void onFinish() {
                     splashScreen.setVisibility(View.GONE);
                     mainLayout.setVisibility(View.VISIBLE);
+                    splashFinished = true;
                 }
             };
 
@@ -160,8 +161,13 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()) {
         case R.id.action_refresh:
-            if (finished) {
+            if (splashFinished) {
+                System.out.println("must be finished");
                 setRefreshActionButtonState(true);
+
+                arraysPopulated = false;
+                //Drop database
+
                 new JsoupListView().execute();
                 return true;
             }
@@ -175,7 +181,7 @@ public class MainActivity extends AppCompatActivity {
                     .findItem(R.id.action_refresh);
             if (refreshItem != null) {
                 if (refreshing) {
-                    refreshItem.setActionView(R.layout.actionbar_indeterminate_progress);
+                    refreshItem.setActionView(R.layout.refresh_event);
                 } else {
                     refreshItem.setActionView(null);
                 }
@@ -192,6 +198,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    //Not sure if this actually refreshes the app with the new data.
     public void populateMainActivity() {
         String link;
         String buttName;
@@ -272,15 +279,18 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(ArrayList<String> strings) {
             super.onPostExecute(strings);
+
             ImageView splash = (ImageView) findViewById(R.id.splash);
             RelativeLayout main = (RelativeLayout) findViewById(R.id.main);
             splash.setVisibility(View.GONE);
             main.setVisibility(View.VISIBLE);
-            finished = true;
+            splashFinished = true;
+
             String link;
             String buttName;
             String infoName;
             String descName;
+
             int j=1;
             for(int i=0;i<15;i++) {
                 String imgId = "imageView"+j;
@@ -335,7 +345,7 @@ public class MainActivity extends AppCompatActivity {
         super.onDestroy();
         System.out.println("Destroying application...");
         Log.d("inOnDestroy", "Hello");
-        if (!(populated)) {
+        if (!(arraysPopulated)) {
             try{
 
                 for(int i = 0; i < eventLinks.size();i++){
@@ -347,6 +357,7 @@ public class MainActivity extends AppCompatActivity {
                 System.out.println("Error: Could not connect to database");
             }
             finish();
+            splashFinished = false;
         }
     }
 }
