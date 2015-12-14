@@ -82,8 +82,9 @@ public class MainActivity extends AppCompatActivity {
 
                 @Override
                 public void onFinish() {
-                    splashScreen.setVisibility(View.GONE);
-                    mainLayout.setVisibility(View.VISIBLE);
+                    setContentView(R.layout.activity_main);
+//                    splashScreen.setVisibility(View.GONE);
+//                    mainLayout.setVisibility(View.VISIBLE);
                     splashFinished = true;
                 }
             };
@@ -205,7 +206,7 @@ public class MainActivity extends AppCompatActivity {
         String infoName;
         String descName;
         int j=1;
-        for(int i=0;i<15;i++) {
+        for(int i=0;i<20;i++) {
             String imgId = "imageView"+j;
             if (j == 1) {
                 ImageView changeImage = (ImageView) findViewById(R.id.imageView);
@@ -224,7 +225,7 @@ public class MainActivity extends AppCompatActivity {
             j++;
         }
         j=1;
-        for(int i=0;i<15;i++) {
+        for(int i=0;i<20;i++) {
             String butId = "button"+j;
             int resID = getResources().getIdentifier(butId, "id", "com.matthew.whatsonandroidapp");
             Button changeButton = (Button) findViewById(resID);
@@ -233,7 +234,7 @@ public class MainActivity extends AppCompatActivity {
             j++;
         }
         j=1;
-        for(int i=0;i<15;i++) {
+        for(int i=0;i<20;i++) {
             String infoId = "info"+j;
             int resID = getResources().getIdentifier(infoId, "id", "com.matthew.whatsonandroidapp");
             TextView changeInfo = (TextView) findViewById(resID);
@@ -242,7 +243,7 @@ public class MainActivity extends AppCompatActivity {
             j++;
         }
         j=1;
-        for(int i=0;i<15;i++) {
+        for(int i=0;i<20;i++) {
             String descId = "desc"+j;
             int resID = getResources().getIdentifier(descId, "id", "com.matthew.whatsonandroidapp");
             TextView changeDesc = (TextView) findViewById(resID);
@@ -292,7 +293,7 @@ public class MainActivity extends AppCompatActivity {
             String descName;
 
             int j=1;
-            for(int i=0;i<15;i++) {
+            for(int i=0;i<20;i++) {
                 String imgId = "imageView"+j;
                 if (j == 1) {
                     ImageView changeImage = (ImageView) findViewById(R.id.imageView);
@@ -311,7 +312,7 @@ public class MainActivity extends AppCompatActivity {
                 j++;
             }
             j=1;
-            for(int i=0;i<15;i++) {
+            for(int i=0;i<20;i++) {
                 String butId = "button"+j;
                 int resID = getResources().getIdentifier(butId, "id", "com.matthew.whatsonandroidapp");
                 Button changeButton = (Button) findViewById(resID);
@@ -320,7 +321,7 @@ public class MainActivity extends AppCompatActivity {
                 j++;
             }
             j=1;
-            for(int i=0;i<15;i++) {
+            for(int i=0;i<20;i++) {
                 String infoId = "info"+j;
                 int resID = getResources().getIdentifier(infoId, "id", "com.matthew.whatsonandroidapp");
                 TextView changeInfo = (TextView) findViewById(resID);
@@ -329,7 +330,7 @@ public class MainActivity extends AppCompatActivity {
                 j++;
             }
             j=1;
-            for(int i=0;i<15;i++) {
+            for(int i=0;i<20;i++) {
                 String descId = "desc"+j;
                 int resID = getResources().getIdentifier(descId, "id", "com.matthew.whatsonandroidapp");
                 TextView changeDesc = (TextView) findViewById(resID);
